@@ -6,7 +6,7 @@ import com.bytmasoft.common.exception.DSSEntityNotFoundException;
 import com.bytmasoft.dss.dto.CourseCreateDTO;
 import com.bytmasoft.dss.dto.CourseDTO;
 import com.bytmasoft.dss.dto.CourseUpdateDTO;
-import com.bytmasoft.dss.service.CoursService;
+import com.bytmasoft.dss.service.CourseService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,7 +44,7 @@ import java.util.List;
 @RestController
 public class CoursController implements DSSCrud<CourseDTO, CourseCreateDTO, CourseUpdateDTO> {
 
-    private final CoursService coursService;
+    private final CourseService coursService;
 private final PagedResourcesAssembler<CourseDTO> pagedResourcesAssembler;
 
 
@@ -53,11 +53,6 @@ private final PagedResourcesAssembler<CourseDTO> pagedResourcesAssembler;
     public ResponseEntity<CourseDTO> save(@Valid CourseCreateDTO courseCreateDTO) {
       return    ResponseEntity.ok(coursService.add(courseCreateDTO));
     }
-
-
-@GetMapping("/students/{id}"){
-
-}
 
 
 @GetMapping

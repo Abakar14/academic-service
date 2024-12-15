@@ -1,0 +1,49 @@
+spring:
+    application:
+        name: academic-service
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        hikari:
+            connection-timeout: 20000
+            maximum-pool-size: 5
+        url: jdbc:postgresql://${POSTGRES_DEV_HOST}:${POSTGRES_DEV_PORT}/${STUDENT_SERVICE_DEV_DB}
+        username: ${POSTGRES_DEV_USER}
+        password: ${POSTGRES_DEV_PASSWORD}
+    jpa:
+        hibernate:
+          ddl-auto: update
+    servlet:
+        multipart:
+            enabled: true
+    main:
+        allow-bean-definition-overriding: true
+server:
+    port: 8083
+    servlet:
+        context-path: /dss/api/v1/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_DEV_HOST}:${EUREKA_DEV_PORT}/eureka/
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+    display-operation-id: false
+    operations-sorter: method
+    display-request-duration: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
+        type: trace
+  root: DEBUG
+
+app:
+  properties:
+    initData:
+      initialize: true
+    dateFormat:
+      yearFirst: "yyyy-MM-dd"
+      dayFirst: "dd.MM.yyyy"

@@ -3,14 +3,12 @@ package com.bytmasoft.dss.entities;
 import com.bytmasoft.common.entities.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,10 +21,15 @@ private static final long serialVersionUID = 1L;
 @Column(nullable = false, unique = true)
 @Size(min = 2, max = 100)
 private String name;
+
 private String description;
+
 private String icon;
+
 private int year;
+
 private String semster;
+
 private Long schoolId;
 
 @ElementCollection

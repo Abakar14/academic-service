@@ -4,11 +4,11 @@ import com.bytmasoft.common.exception.DSSEntityNotFoundException;
 import com.bytmasoft.dss.dto.CourseCreateDTO;
 import com.bytmasoft.dss.dto.CourseDTO;
 import com.bytmasoft.dss.dto.CourseUpdateDTO;
-import com.bytmasoft.dss.entities.Cours;
+import com.bytmasoft.dss.entities.Course;
+import com.bytmasoft.dss.utils.AppUtils;
 import com.bytmasoft.dss.mapper.CourseMapper;
 import com.bytmasoft.dss.repository.CoursRepository;
 import com.bytmasoft.dss.repository.CoursSpecification;
-import com.bytmasoft.dss.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,32 +22,32 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class CoursService {
+public class CourseService {
         //implements ServiceApi<CourseDTO, CourseCreateDTO, CourseUpdateDTO> {
-    private static final Logger logger = LoggerFactory.getLogger(CoursService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
     private final CoursRepository coursRepository;
     private final PagedResourcesAssembler<CourseDTO> pagedResourcesAssembler;
     private final CourseMapper courseMapper;
-    private final ApiUtils apiUtils;
+    private final AppUtils apiUtils;
 
     public CourseDTO add(CourseCreateDTO courseCreateDTO) {
-        Cours cours = courseMapper.toCours(courseCreateDTO);
+        Course cours = courseMapper.toCours(courseCreateDTO);
         cours.setAddedBy(apiUtils.getUsername());
-        Cours savedCours = coursRepository.save(cours);
+        Course savedCours = coursRepository.save(cours);
         logger.info("User {} successfully Created student with id  {}", apiUtils.getUsername() , savedCours.getId());
 
         return courseMapper.toCoursDto(savedCours);
 
     }
 
-    private Cours getCours(Long id){
+    private Course getCours(Long id){
         return coursRepository.findById(id).orElseThrow(()-> new DSSEntityNotFoundException("Cours with id: "+id+" not found"));
 
     }
 
     public Page<CourseDTO> findAll(Pageable pageable) {
-        Page<Cours> coursPage = coursRepository.findAll(pageable);
+        Page<Course> coursPage = coursRepository.findAll(pageable);
 
         return coursPage.map(courseMapper::toCoursDto);
     }
@@ -71,16 +71,16 @@ public Page<CourseDTO> searchCourses(String search, Pageable pageable) {
     }
 
     public CourseDTO update(Long aLong, CourseUpdateDTO courseUpdateDTO) {
-     Cours cours = getCours(aLong);
+     Course cours = getCours(aLong);
      courseMapper.updateCours(courseUpdateDTO, cours);
      cours.setModifiedBy(apiUtils.getUsername());
         logger.info("User {} successfully update cours with id  {}", apiUtils.getUsername() , cours.getId());
-        Cours savedCours = coursRepository.save(cours);
+        Course savedCours = coursRepository.save(cours);
         return courseMapper.toCoursDto(savedCours);
     }
 
     public CourseDTO delete(Long id) {
-        Cours cours = getCours(id);
+        Course cours = getCours(id);
         cours.setModifiedBy(apiUtils.getUsername());
         coursRepository.delete(cours);
         return courseMapper.toCoursDto(cours);
@@ -88,7 +88,7 @@ public Page<CourseDTO> searchCourses(String search, Pageable pageable) {
     }
 
     public CourseDTO unlock(Long id) {
-        Cours cours = getCours(id);
+        Course cours = getCours(id);
         cours.setIsActive(true);
         cours.setModifiedBy(apiUtils.getUsername());
         return courseMapper.toCoursDto(cours);
@@ -107,7 +107,7 @@ public Page<CourseDTO> searchCourses(String search, Pageable pageable) {
     }
 
     public CourseDTO markfordeletion(Long id) {
-        Cours cours = getCours(id);
+        Course cours = getCours(id);
         cours.setDeleted(true);
         cours.setModifiedBy(apiUtils.getUsername());
         coursRepository.save(cours);
@@ -115,7 +115,7 @@ public Page<CourseDTO> searchCourses(String search, Pageable pageable) {
     }
 
     public CourseDTO lockout(Long id) {
-        Cours cours = getCours(id);
+        Course cours = getCours(id);
         cours.setIsActive(false);
         cours.setModifiedBy(apiUtils.getUsername());
         coursRepository.save(cours);

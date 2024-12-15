@@ -1,0 +1,37 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:h2:mem:testdb # 'testdb' is the name of the in-memory database
+    driver-class-name: org.h2.Driver
+    username: sa # Default username for H2
+    password: # No password required by default
+  h2:
+    console:
+      enabled: true # Enable H2 console for web access
+      path: /h2-console # Path to access H2 console (default is /h2-console)
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect # Use H2 dialect
+    hibernate:
+      ddl-auto: update # Automatically create/update tables. You can also use 'create', 'create-drop', or 'validate' for different scenarios.
+    show-sql: true # Show SQL statements in the console for debugging
+  sql:
+    init:
+      platform: h2
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka/
+## JWT Properties expiration and refresh times (in milliseconds)
+## Secret key
+jwt:
+  secret:
+    key: 8KvVu4Bn2KwBNX1MdnXY6VaRVLekVxurk3aaJxnzdCuZL6AHEL0EnnAOYLZtHWUr
+  access:
+    token:
+      expiration: 1800000 # 30 min in milliseconds for token expiration time
+  refresh:
+    token:
+      expiration: 604800000 # 7 days in milliseconds
+
+#spring.main.allow-bean-definition-overriding=true

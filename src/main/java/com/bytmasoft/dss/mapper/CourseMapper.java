@@ -3,17 +3,17 @@ package com.bytmasoft.dss.mapper;
 import com.bytmasoft.dss.dto.CourseCreateDTO;
 import com.bytmasoft.dss.dto.CourseDTO;
 import com.bytmasoft.dss.dto.CourseUpdateDTO;
-import com.bytmasoft.dss.entities.Cours;
+import com.bytmasoft.dss.entities.Course;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CourseMapper {
 
-    CourseDTO toCoursDto(Cours cours);
+    CourseDTO toCoursDto(Course cours);
 
-    Cours toCours(CourseCreateDTO courseCreateDTO);
+    Course toCours(CourseCreateDTO courseCreateDTO);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateCours(CourseUpdateDTO courseUpdateDTO, @MappingTarget Cours cours);
+    void updateCours(CourseUpdateDTO courseUpdateDTO, @MappingTarget Course cours);
 
 }
