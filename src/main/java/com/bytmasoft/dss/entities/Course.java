@@ -51,4 +51,9 @@ public class Course extends BaseEntity implements Serializable {
     @Column(name = "document_id")
     private List<Long> documentIds;
 
+@ElementCollection
+@CollectionTable(name = "student_course", joinColumns = @JoinColumn(name = "student_id"))
+@Column(name = "course_id")
+private List<Long> studentIds;
+
 }

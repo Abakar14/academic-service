@@ -41,10 +41,7 @@ public class CourseService {
 
     }
 
-    private Course getCours(Long id){
-        return coursRepository.findById(id).orElseThrow(()-> new DSSEntityNotFoundException("Cours with id: "+id+" not found"));
 
-    }
 
     public Page<CourseDTO> findAll(Pageable pageable) {
         Page<Course> coursPage = coursRepository.findAll(pageable);
@@ -123,4 +120,27 @@ public Page<CourseDTO> searchCourses(String search, Pageable pageable) {
     }
 
 
+public List<Long> fetchStudentIdsInCourse(Long id) throws DSSEntityNotFoundException {
+        Course cours = getCours(id);
+       return cours.getStudentIds();
+    }
+
+public CourseDTO enrollStudentsToCourse(Long courseId, List<Long> studentIds) throws DSSEntityNotFoundException {
+
+    Course course = getCours(courseId);
+    studentIds.forEach(studentId -> {
+        //TODO
+        // check students existence if true
+        course.getStudentIds().add(studentId);
+        //else throw error
+    });
+
+    return courseMapper.toCoursDto(course);
+}
+
+
+private Course getCours(Long id) throws DSSEntityNotFoundException {
+    return coursRepository.findById(id).orElseThrow(()-> new DSSEntityNotFoundException("Cours with id: "+id+" not found"));
+
+}
 }
