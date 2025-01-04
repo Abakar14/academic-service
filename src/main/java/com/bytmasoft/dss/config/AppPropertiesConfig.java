@@ -27,7 +27,4 @@ public class AppPropertiesConfig {
         private String yearFirst;
         private String dayFirst;
     }
-
-
-
 }
